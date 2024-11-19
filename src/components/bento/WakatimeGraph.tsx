@@ -54,32 +54,23 @@ const WakatimeGraph = ({ omitLanguages = [] }: Props) => {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch(
-      'https://wakatime.com/share/@jktrn/ef6e633b-589d-44f2-9ae6-0eb93445cf2a.json',
+    // Manually define the languages data
+    const manualLanguages: Language[] = [
+      { name: 'C++', hours: 50, fill: colors[0] },
+      { name: 'Python', hours: 40, fill: colors[1] },
+      { name: 'C#', hours: 30, fill: colors[2] },
+      { name: 'TypeScript (tsx)', hours: 20, fill: colors[3] },
+      { name: 'Kali Linux', hours: 10, fill: colors[4] },
+    ]
+
+    // Filter out omitted languages
+    const filteredLanguages = manualLanguages.filter(
+      (lang) => !omitLanguages.includes(lang.name),
     )
-      .then((response) => {
-        if (!response.ok) throw new Error('Failed to fetch data')
-        return response.json()
-      })
-      .then((data) => {
-        const filteredLanguages = data.data
-          .filter(
-            (lang: { name: string }) => !omitLanguages.includes(lang.name),
-          )
-          .slice(0, 7)
-          .map((lang: { name: string; hours: number }, index: number) => ({
-            name: lang.name,
-            hours: Number(lang.hours.toFixed(2)),
-            fill: colors[index % colors.length],
-          }))
-        setLanguages(filteredLanguages)
-        setIsLoading(false)
-      })
-      .catch((err) => {
-        setError(err instanceof Error ? err.message : 'An error occurred')
-        setIsLoading(false)
-      })
-  }, [])
+
+    setLanguages(filteredLanguages)
+    setIsLoading(false)
+  }, [omitLanguages])
 
   const CustomYAxisTick = ({ x, y, payload }: any) => {
     const icon = getLanguageIcon(payload.value.toLowerCase())
@@ -111,7 +102,7 @@ const WakatimeGraph = ({ omitLanguages = [] }: Props) => {
     return (
       <div className="size-full rounded-3xl p-4">
         <div className="space-y-1.5">
-          {[...Array(7)].map((_, index) => (
+          {[...Array(5)].map((_, index) => (
             <div key={index} className="flex items-center gap-x-4">
               <Skeleton className="size-7 rounded-full" />
               <div className="flex-1">
@@ -141,7 +132,7 @@ const WakatimeGraph = ({ omitLanguages = [] }: Props) => {
           type="category"
           tickLine={false}
           axisLine={false}
-          width={50}
+          width={80}
           tick={<CustomYAxisTick />}
         />
         <XAxis type="number" hide />

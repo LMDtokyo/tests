@@ -1,26 +1,54 @@
 'use client'
 
+import React, { useCallback, useEffect, useState } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
-import { type FunctionComponent, useCallback, useEffect, useState } from 'react'
 import Calendar, {
   type Props as ActivityCalendarProps,
 } from 'react-activity-calendar'
 
-// Adopted from https://github.com/grubersjoe/react-github-calendar
-// Copyright (c) 2019 Jonathan Gruber, MIT License
-
-interface Props extends Omit<ActivityCalendarProps, 'data' | 'theme'> {
-  username: string
+// Типы данных для API ответа
+interface Activity {
+  date: string
+  count: number
+  level: 0 | 1 | 2 | 3 | 4
 }
 
-async function fetchCalendarData(username: string): Promise<ApiResponse> {
+interface ApiResponse {
+  total: {
+    [year: number]: number
+    [year: string]: number
+  }
+  contributions: Array<Activity>
+}
+
+interface ApiErrorResponse {
+  error: string
+}
+
+// Типы пропсов компонента
+interface Props extends Omit<ActivityCalendarProps, 'data' | 'theme'> {}
+
+// Функция для выбора последних N дней
+const selectLastNDays = (contributions: Activity[], days: number): Activity[] => {
+  const today = new Date()
+  const startDate = new Date(today)
+  startDate.setDate(today.getDate() - days)
+
+  return contributions.filter((activity) => {
+    const activityDate = new Date(activity.date)
+    return activityDate >= startDate && activityDate <= today
+  })
+}
+
+// Функция для получения данных календаря
+const fetchCalendarData = async (username: string): Promise<ApiResponse> => {
   const response = await fetch(
     `https://github-contributions-api.jogruber.de/v4/${username}?y=last`,
   )
   const data: ApiResponse | ApiErrorResponse = await response.json()
 
   if (!response.ok) {
-    throw Error(
+    throw new Error(
       `Fetching GitHub contribution data for "${username}" failed: ${
         (data as ApiErrorResponse).error
       }`,
@@ -30,7 +58,9 @@ async function fetchCalendarData(username: string): Promise<ApiResponse> {
   return data as ApiResponse
 }
 
-const GithubCalendar: FunctionComponent<Props> = ({ username, ...props }) => {
+// Компонент GithubCalendar с фиксированным username
+const GithubCalendar: React.FC<Props> = (props) => {
+  const username = 'LMDtokyo' // Ваш GitHub username
   const [data, setData] = useState<ApiResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
@@ -44,7 +74,9 @@ const GithubCalendar: FunctionComponent<Props> = ({ username, ...props }) => {
       .finally(() => setLoading(false))
   }, [username])
 
-  useEffect(fetchData, [fetchData])
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
 
   if (error) {
     return (
@@ -52,8 +84,8 @@ const GithubCalendar: FunctionComponent<Props> = ({ username, ...props }) => {
         <img
           src="/static/images/bento/bento-discord-futon.svg"
           alt="Error"
-          width={0}
-          height={0}
+          width={192} // Изменил ширину для отображения изображения
+          height={192} // Изменил высоту для отображения изображения
           className="bento-lg:w-48 h-auto w-24"
         />
         <p className="bento-lg:w-64 w-48 text-center text-sm text-muted-foreground">
@@ -103,35 +135,6 @@ const GithubCalendar: FunctionComponent<Props> = ({ username, ...props }) => {
       </div>
     </>
   )
-}
-
-interface Activity {
-  date: string
-  count: number
-  level: 0 | 1 | 2 | 3 | 4
-}
-
-interface ApiResponse {
-  total: {
-    [year: number]: number
-    [year: string]: number
-  }
-  contributions: Array<Activity>
-}
-
-interface ApiErrorResponse {
-  error: string
-}
-
-const selectLastNDays = (contributions: Activity[], days: number) => {
-  const today = new Date()
-  const startDate = new Date(today)
-  startDate.setDate(today.getDate() - days)
-
-  return contributions.filter((activity) => {
-    const activityDate = new Date(activity.date)
-    return activityDate >= startDate && activityDate <= today
-  })
 }
 
 export default GithubCalendar

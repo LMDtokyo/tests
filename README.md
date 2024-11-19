@@ -2,14 +2,14 @@
 
 <div align="center">
 
-## enscribe.dev
+## PixelPulse.dev
 
 [![CodeFactor]](https://www.codefactor.io/repository/github/jktrn/enscribe.dev)
 ![Stargazers]
 [![Code License]](LICENSE.md)
 [![Content License]](LICENSE.content.md)
 
-[enscribe.dev](https://enscribe.dev) is my personal information security blog—built with [Astro](https://astro.build/), [Tailwind](https://tailwindcss.com/), and [shadcn/ui](https://ui.shadcn.com/). Based on my personal blogging template, [astro-erudite](https://github.com/jktrn/astro-erudite).
+[PixelPulse.dev](https://enscribe.dev) is my personal information security blog—built with [Astro](https://astro.build/), [Tailwind](https://tailwindcss.com/), and [shadcn/ui](https://ui.shadcn.com/). Based on my personal blogging template, [astro-erudite](https://github.com/jktrn/astro-erudite).
 
 </div>
 
@@ -42,7 +42,7 @@ This project uses a multi-tiered licensing approach to differentiate between var
 
 From the [Original Template License](LICENSE.md#original-template-license) section within the license:
 
-> This website is based on [astro-erudite](https://github.com/jktrn/astro-erudite), which was loosely derived from an MIT-licensed project, [trevortylerlee/astro-micro](https://github.com/trevortylerlee/astro-micro).
+> This website is based on [astro-erudite](https://github.com/LMDtokyo/PixelPulse), which was loosely derived from an MIT-licensed project, [trevortylerlee/astro-micro](https://github.com/trevortylerlee/astro-micro).
 
 The original MIT license is included in the full [LICENSE.md](LICENSE.md) file for compliance.
 
@@ -54,7 +54,7 @@ All modifications and custom implementations made to the original template are p
 
 From the [Website Code License](LICENSE.md#website-code-license) section:
 
-> This license applies specifically to the custom modifications made to the [jktrn/astro-erudite](https://github.com/jktrn/astro-erudite) template. It does not extend to the original template code, which remains under its original MIT license.
+> This license applies specifically to the custom modifications made to the [LMDtokyo/astro-erudite](https://github.com/LMDtokyo/PixelPulse) template. It does not extend to the original template code, which remains under its original MIT license.
 
 From the [Disclaimer](LICENSE.md#disclaimer) section:
 
@@ -70,7 +70,7 @@ From the [Website Content License](LICENSE.md#website-content-license) section:
 >
 > To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or view [LICENSE.content.md](./LICENSE.content.md).
 
-For full license details and permission requests, please refer to the [LICENSE.md](LICENSE.md) file in this repository or contact [jason@enscribe.dev](mailto:jason@enscribe.dev).
+For full license details and permission requests, please refer to the [LICENSE.md](LICENSE.md) file in this repository or contact [letmedietokyo@icloud.com](mailto:jason@enscribe.dev).
 
 ---
 
@@ -87,7 +87,7 @@ For full license details and permission requests, please refer to the [LICENSE.m
 
 ---
 
-Made with ♥ by [enscribe](https://enscribe.dev)!
+Made with ♥ by [PixelPulse](https://PixelPulse.dev)!
 
 [cc-by-nc-nd]: http://creativecommons.org/licenses/by-nc-nd/4.0/
 [cc-by-nc-nd-shield]: https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg

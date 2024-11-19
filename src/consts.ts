@@ -13,13 +13,13 @@ export type Link = {
 }
 
 export const SITE: Site = {
-  TITLE: 'enscribe.dev',
+  TITLE: 'PixelPulse',
   DESCRIPTION:
     'Freelance frontend web development and cybersecurity shenanigans.',
-  EMAIL: 'jason@enscribe.dev',
+  EMAIL: 'letmedietokyo@icloud.com',
   NUM_POSTS_ON_HOMEPAGE: 2,
   POSTS_PER_PAGE: 4,
-  SITEURL: 'https://enscribe-dev-astro.vercel.app',
+  SITEURL: '',
 }
 
 export const NAV_LINKS: Link[] = [
@@ -34,8 +34,8 @@ export const NAV_LINKS: Link[] = [
 ]
 
 export const SOCIAL_LINKS: Link[] = [
-  { href: 'https://github.com/jktrn', label: 'GitHub' },
-  { href: 'https://twitter.com/enscry', label: 'Twitter' },
-  { href: 'jason@enscribe.dev', label: 'Email' },
+  { href: 'https://github.com/LMDtokyo', label: 'GitHub' },
+  { href: 'https://twitter.com/LMDtokyo', label: 'Twitter' },
+  { href: 'letmedietokyo@icloud.com', label: 'Email' },
   { href: '/rss.xml', label: 'RSS' },
 ]
