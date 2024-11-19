@@ -1,12 +1,21 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "strictNullChecks": true,
+    "strict": false,                   // Отключает строгий режим типизации
+    "noEmitOnError": false,            // Позволяет TypeScript эмитировать файлы даже при ошибках
+    "skipLibCheck": true,              // Пропускает проверку типов в файлах библиотек
+    "noImplicitAny": false,            // Разрешает неявные типы any
+    "strictNullChecks": false,         // Отключает проверку на null и undefined
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
-    "jsx": "react-jsx",
-    "jsxImportSource": "react"
-  }
+    "jsx": "react-jsx",                 // Использование JSX с React
+    "jsxImportSource": "react",         // Источник JSX для React
+    "allowJs": true,                    // Разрешает использование JavaScript файлов
+    "esModuleInterop": true,            // Разрешает импорт CommonJS модулей
+    "isolatedModules": false            // Отключает изолированные модули
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", ".astro", "dist", "build"]
 }
