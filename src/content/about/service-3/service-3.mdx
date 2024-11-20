@@ -11,21 +11,16 @@ date: 2022-03-17
 
 Hunting down a flag-stealing ransomware group from WolvCTF 2023 with the power of 
 [OSINT—from Ethereum](https://ctftime.org/team/175828) breadcrumbs to TF2 workshop maps.<br/>
-• Seiri, or organization (think “sort” in English). Knowing where things are—using 
-approaches such as suitable naming—is crucial. You think naming identifiers isn’t 
-important? Read on in the following chapters.<br/>
-• Seiton, or tidiness (think “systematize” in English). There is an old American saying: 
-A place for everything, and everything in its place. A piece of code should be where 
-you expect to find it—and, if not, you should re-factor to get it there.<br/>
-• Seiso, or cleaning (think “shine” in English): Keep the workplace free of hanging 
-wires, grease, scraps, and waste. What do the authors here say about littering your 
-code with comments and commented-out code lines that capture history or wishes for 
-the future? Get rid of them.<br/>
-• Seiketsu, or standardization: The group agrees about how to keep the workplace clean. 
-Do you think this book says anything about having a consistent coding style and set of 
-practices within the group? Where do those standards come from? Read on.<br/>
-• Shutsuke, or discipline (self-discipline). This means having the discipline to follow the 
-practices and to frequently reflect on one’s work and be willing to change.
+It is normal for flaws in concurrent code to hide. Simple tests often don’t expose them.
+Indeed, they often hide during normal processing. They might show up once every few
+hours, or days, or weeks! 
+The reason that threading bugs can be infrequent, sporadic, and hard to repeat, is that
+only a very few pathways out of the many thousands of possible pathways through a vulnerable section actually fail. So the probability that a failing pathway is taken can be startlingly low. This makes detection and debugging very difficult.
+How might you increase your chances of catching such rare occurrences? You can
+instrument your code and force it to run in different orderings by adding calls to methods
+like Object.wait(), Object.sleep(), Object.yield() and Object.priority().
+Each of these methods can affect the order of execution, thereby increasing the odds
+of detecting a flaw. It’s better when broken code fails as early
 
 ---
 

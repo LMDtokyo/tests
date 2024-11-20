@@ -1,7 +1,7 @@
 ---
 
 image: 'assets/service-4.png'
-title: 'Dota-2'
+title: 'Telegram'
 description:  "Hunting down a flag-stealing ransomware group from WolvCTF 2023 with the power of OSINT—from Ethereum breadcrumbs to TF2 workshop maps."
 date: 2023-03-17
 
@@ -11,21 +11,24 @@ date: 2023-03-17
 
 Hunting down a flag-stealing ransomware group from WolvCTF 2023 with the power of 
 [OSINT—from Ethereum](https://ctftime.org/team/175828) breadcrumbs to TF2 workshop maps.<br/>
-• Seiri, or organization (think “sort” in English). Knowing where things are—using 
-approaches such as suitable naming—is crucial. You think naming identifiers isn’t 
-important? Read on in the following chapters.<br/>
-• Seiton, or tidiness (think “systematize” in English). There is an old American saying: 
-A place for everything, and everything in its place. A piece of code should be where 
-you expect to find it—and, if not, you should re-factor to get it there.<br/>
-• Seiso, or cleaning (think “shine” in English): Keep the workplace free of hanging 
-wires, grease, scraps, and waste. What do the authors here say about littering your 
-code with comments and commented-out code lines that capture history or wishes for 
-the future? Get rid of them.<br/>
-• Seiketsu, or standardization: The group agrees about how to keep the workplace clean. 
-Do you think this book says anything about having a consistent coding style and set of 
-practices within the group? Where do those standards come from? Read on.<br/>
-• Shutsuke, or discipline (self-discipline). This means having the discipline to follow the 
-practices and to frequently reflect on one’s work and be willing to change.
+•Learn your library and know the fundamental algorithms. Understand how some of
+the features offered by the library support solving problems similar to the fundamental
+algorithms.
+Learn how to find regions of code that must be locked and lock them. Do not lock
+regions of code that do not need to be locked. Avoid calling one locked section from
+another. This requires a deep understanding of whether something is or is not shared. Keep
+the amount of shared objects and the scope of the sharing as narrow as possible. Change
+designs of the objects with shared data to accommodate clients rather than forcing clients
+to manage shared state.
+Issues will crop up. The ones that do not crop up early are often written off as a onetime occurrence. These so-called one-offs typically only happen under load or at seemingly random times. Therefore, you need to be able to run your thread-related code in
+many configurations on many platforms repeatedly and continuously. Testability, which
+comes naturally from following the Three Laws of TDD, implies some level of plug-ability,
+which offers the support necessary to run code in a wider range of configurations.
+You will greatly improve your chances of finding erroneous code if you take the time
+to instrument your code. You can either do so by hand or using some kind of automated
+technology. Invest in this early. You want to be running your thread-based code as long as
+possible before you put it into production.
+If you take a clean approach, your chances of getting it right increase drastically
 
 ---
 

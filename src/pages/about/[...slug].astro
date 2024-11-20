@@ -62,7 +62,7 @@ const { Content, headings } = await post.render()
   >
     <Breadcrumbs
       items={[
-        { href: '/books', label: 'Books', icon: 'lucide:archive' },
+        { href: '/about', label: 'About', icon: 'lucide:archive' },
         { label: post.data.title, icon: 'lucide:file-text' },
       ]}
       class="col-start-2"
@@ -88,7 +88,7 @@ const { Content, headings } = await post.render()
       <PostNavigation
         prevPost={prevPost}
         nextPost={nextPost}
-        baseUrl="/books/"
+        baseUrl="/about/"
       />
     </section>
 
@@ -100,7 +100,7 @@ const { Content, headings } = await post.render()
       <Content />
     </article>
 
-    <PostNavigation prevPost={prevPost} nextPost={nextPost} baseUrl="/books/" />
+    <PostNavigation prevPost={prevPost} nextPost={nextPost} baseUrl="/about/" />
   </section>
 
   <Button
