@@ -9,7 +9,7 @@
 [![Code License]](LICENSE.md)
 [![Content License]](LICENSE.content.md)
 
-[PixelPulse.dev]([https://enscribe.dev](https://pixel-pulse-dev-nig4.vercel.app)) is my personal information security blog—built with [Astro](https://astro.build/), [Tailwind](https://tailwindcss.com/), and [shadcn/ui](https://ui.shadcn.com/). Based on my personal blogging template, [astro-erudite](https://github.com/jktrn/astro-erudite).
+[PixelPulse.dev]([https://pixel-pulse-dev-nig4.vercel.app]) is my personal information security blog—built with [Astro](https://astro.build/), [Tailwind](https://tailwindcss.com/), and [shadcn/ui](https://ui.shadcn.com/). Based on my personal blogging template, [astro-erudite](https://github.com/jktrn/astro-erudite).
 
 </div>
 
