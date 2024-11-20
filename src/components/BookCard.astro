@@ -1,0 +1,97 @@
+---
+import AvatarComponent from '@/components/ui/avatar'
+import { Badge } from '@/components/ui/badge'
+import { Separator } from '@/components/ui/separator'
+import { formatDate, readingTime } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import Link from './Link.astro'
+
+type Props = {
+    entry: CollectionEntry<'books'>
+}
+
+const { entry } = Astro.props as {
+    entry: CollectionEntry<'books'>
+}
+
+const formattedDate = formatDate(entry.data.date)
+const readTime = readingTime(entry.body)
+---
+
+<div
+    class="not-prose rounded-xl border p-4 transition-colors duration-300 ease-in-out hover:bg-secondary/50"
+>
+    <div class="flex flex-col gap-4 sm:flex-row">
+        <div class="max-w-[275px] sm:flex-shrink-0">
+            <Link href={`/${entry.collection}/${entry.slug}`}>
+                {
+                    entry.data.image && (
+                        <Image
+                            src={entry.data.image}
+                            alt={entry.data.title}
+                            width={1200}
+                            height={630}
+                            class="object-cover"
+                        />
+                    )
+                }
+            </Link>
+
+            <div class="flex flex-row justify-between itmes-center gap-2 mt-1">
+                <Button variant="secondary" size="sm">
+                    <Icon
+                        name="lucide:download"
+                        class="mr-2 size-4 -translate-x-0.5"
+                    />
+                    Download
+                </Button>
+                <div class="flex flex-row justify-center items-center gap-3">
+                    <Badge variant="outline" showHash={false}>{entry.data.lang}</Badge>
+                    <Separator orientation="vertical" className="h-4" />
+                    <Badge variant="outline" showHash={false}>{entry.data.pages} page</Badge>
+                </div>
+            </div>
+        </div>
+        <div class="flex-grow">
+            <h3 class="mb-1 text-lg font-semibold">
+                <Link href={`/${entry.collection}/${entry.slug}`}>
+                    {entry.data.title}
+                </Link>
+            </h3>
+            <p class="mb-2 text-sm text-muted-foreground">
+                {entry.data.description}
+            </p>
+            <div
+                class="mb-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground"
+            >
+                <div class="flex items-center gap-x-1.5">
+                    <AvatarComponent
+                        client:load
+                        src={entry.data.author.avatar}
+                        alt={entry.data.author.name}
+                        fallback={entry.data.author.name[0]}
+                        className="size-5 rounded-full"
+                    />
+                    <span>{entry.data.author.name}</span>
+                </div>
+
+                <Separator orientation="vertical" className="h-4" />
+                <span>{formattedDate}</span>
+                <Separator orientation="vertical" className="h-4" />
+                <span>{readTime}</span>
+            </div>
+            {
+                entry.data.tags && (
+                    <div class="flex flex-wrap gap-2">
+                        {entry.data.tags.map((tag: string) => (
+                            <Badge variant="secondary">{tag}</Badge>
+                        ))}
+                    </div>
+                )
+            }
+        </div>
+    </div>
+</div>

@@ -4,28 +4,29 @@ import Link from '@/components/Link.astro'
 import PostNavigation from '@/components/PostNavigation.astro'
 import TableOfContents from '@/components/TableOfContents.astro'
 import { badgeVariants } from '@/components/ui/badge'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import Layout from '@/layouts/Layout.astro'
-import { formatDate, parseAuthors, readingTime } from '@/lib/utils'
+import { formatDate, readingTime } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { type CollectionEntry, getCollection } from 'astro:content'
 
 export async function getStaticPaths() {
-  const posts = (await getCollection('blog'))
-    .filter((post) => !post.data.draft)
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  const posts = (await getCollection('about')).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  )
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: post,
   }))
 }
-type Props = CollectionEntry<'blog'>
+type Props = CollectionEntry<'about'>
 
-const posts = (await getCollection('blog'))
-  .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+const posts = (await getCollection('about')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+)
 
 function getPostIndex(slug: string): number {
   return posts.findIndex((post) => post.slug === slug)
@@ -49,8 +50,6 @@ const prevPost = getPrevPost(currentPostSlug)
 
 const post = Astro.props
 const { Content, headings } = await post.render()
-
-const authors = await parseAuthors(post.data.authors ?? [])
 ---
 
 <Layout
@@ -63,24 +62,11 @@ const authors = await parseAuthors(post.data.authors ?? [])
   >
     <Breadcrumbs
       items={[
-        { href: '/blog', label: 'Blog', icon: 'lucide:archive' },
+        { href: '/books', label: 'Books', icon: 'lucide:archive' },
         { label: post.data.title, icon: 'lucide:file-text' },
       ]}
       class="col-start-2"
     />
-    <div class="col-span-full mx-auto w-full max-w-[1000px]">
-      {
-        post.data.image && (
-          <Image
-            src={post.data.image}
-            alt={post.data.title}
-            width={1200}
-            height={630}
-            class="rounded-xl object-cover"
-          />
-        )
-      }
-    </div>
     <section class="col-start-2 flex flex-col gap-y-6 text-center">
       <div class="flex flex-col gap-y-4">
         <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">
@@ -90,65 +76,20 @@ const authors = await parseAuthors(post.data.authors ?? [])
         <div
           class="flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground"
         >
-          {
-            authors.length > 0 && (
-              <>
-                <div class="flex items-center gap-x-2">
-                  {authors.map((author) => (
-                    <div class="flex items-center gap-x-1.5">
-                      <Image
-                        src={author.avatar}
-                        alt={author.name}
-                        width={24}
-                        height={24}
-                        class="rounded-full"
-                      />
-                      {author.isRegistered ? (
-                        <Link
-                          href={`/authors/${author.slug}`}
-                          underline
-                          class="text-foreground"
-                        >
-                          <span>{author.name}</span>
-                        </Link>
-                      ) : (
-                        <span>{author.name}</span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <Separator orientation="vertical" className="h-4" />
-              </>
-            )
-          }
+          <Separator orientation="vertical" className="h-4" />
+
           <div class="flex items-center gap-2">
             <span>{formatDate(post.data.date)}</span>
             <Separator orientation="vertical" className="h-4" />
             <span>{readingTime(post.body)}</span>
           </div>
         </div>
-        <div class="flex flex-wrap justify-center gap-2">
-          {
-            post.data.tags && post.data.tags.length > 0 ? (
-              post.data.tags.map((tag: any) => (
-                <a
-                  href={`/tags/${tag}`}
-                  class={badgeVariants({ variant: 'secondary' })}
-                >
-                  <Icon name="lucide:hash" class="size-3 -translate-x-0.5" />
-                  {tag}
-                </a>
-              ))
-            ) : (
-              <span class="text-sm text-muted-foreground">
-                No tags available
-              </span>
-            )
-          }
-        </div>
       </div>
-
-      <PostNavigation prevPost={prevPost} nextPost={nextPost} baseUrl="/blog/"/>
+      <PostNavigation
+        prevPost={prevPost}
+        nextPost={nextPost}
+        baseUrl="/books/"
+      />
     </section>
 
     {headings.length > 0 && <TableOfContents headings={headings} />}
@@ -159,7 +100,7 @@ const authors = await parseAuthors(post.data.authors ?? [])
       <Content />
     </article>
 
-    <PostNavigation prevPost={prevPost} nextPost={nextPost} baseUrl="/blog/"/>
+    <PostNavigation prevPost={prevPost} nextPost={nextPost} baseUrl="/books/" />
   </section>
 
   <Button

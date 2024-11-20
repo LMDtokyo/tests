@@ -4,28 +4,29 @@ import Link from '@/components/Link.astro'
 import PostNavigation from '@/components/PostNavigation.astro'
 import TableOfContents from '@/components/TableOfContents.astro'
 import { badgeVariants } from '@/components/ui/badge'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import Layout from '@/layouts/Layout.astro'
-import { formatDate, parseAuthors, readingTime } from '@/lib/utils'
+import { formatDate, readingTime } from '@/lib/utils'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { type CollectionEntry, getCollection } from 'astro:content'
 
 export async function getStaticPaths() {
-  const posts = (await getCollection('blog'))
-    .filter((post) => !post.data.draft)
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  const posts = (await getCollection('books')).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  )
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: post,
   }))
 }
-type Props = CollectionEntry<'blog'>
+type Props = CollectionEntry<'books'>
 
-const posts = (await getCollection('blog'))
-  .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+const posts = (await getCollection('books')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+)
 
 function getPostIndex(slug: string): number {
   return posts.findIndex((post) => post.slug === slug)
@@ -49,8 +50,6 @@ const prevPost = getPrevPost(currentPostSlug)
 
 const post = Astro.props
 const { Content, headings } = await post.render()
-
-const authors = await parseAuthors(post.data.authors ?? [])
 ---
 
 <Layout
@@ -63,7 +62,7 @@ const authors = await parseAuthors(post.data.authors ?? [])
   >
     <Breadcrumbs
       items={[
-        { href: '/blog', label: 'Blog', icon: 'lucide:archive' },
+        { href: '/books', label: 'Books', icon: 'lucide:archive' },
         { label: post.data.title, icon: 'lucide:file-text' },
       ]}
       class="col-start-2"
@@ -90,37 +89,26 @@ const authors = await parseAuthors(post.data.authors ?? [])
         <div
           class="flex flex-wrap items-center justify-center gap-2 text-sm text-muted-foreground"
         >
-          {
-            authors.length > 0 && (
-              <>
-                <div class="flex items-center gap-x-2">
-                  {authors.map((author) => (
-                    <div class="flex items-center gap-x-1.5">
-                      <Image
-                        src={author.avatar}
-                        alt={author.name}
-                        width={24}
-                        height={24}
-                        class="rounded-full"
-                      />
-                      {author.isRegistered ? (
-                        <Link
-                          href={`/authors/${author.slug}`}
-                          underline
-                          class="text-foreground"
-                        >
-                          <span>{author.name}</span>
-                        </Link>
-                      ) : (
-                        <span>{author.name}</span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <Separator orientation="vertical" className="h-4" />
-              </>
-            )
-          }
+          <div class="flex items-center gap-x-2">
+            <div class="flex items-center gap-x-1.5">
+              <Image
+                src={post.data.author.avatar}
+                alt={post.data.author.name}
+                width={24}
+                height={24}
+                class="rounded-full"
+              />
+              <Link
+                href={`/authors/${post.data.author.name}`}
+                underline
+                class="text-foreground"
+              >
+                <span>{post.data.author.name}</span>
+              </Link>
+            </div>
+          </div>
+          <Separator orientation="vertical" className="h-4" />
+
           <div class="flex items-center gap-2">
             <span>{formatDate(post.data.date)}</span>
             <Separator orientation="vertical" className="h-4" />
@@ -147,8 +135,25 @@ const authors = await parseAuthors(post.data.authors ?? [])
           }
         </div>
       </div>
+      <div class="flex flex-row justify-center items-center gap-12">
+        <Button variant="secondary" size="sm">
+          <Icon name="lucide:download" class="mr-2 size-4 -translate-x-0.5" />
+          Download
+        </Button>
+        <div class="flex flex-row items-center justify-center gap-3">
+          <Badge variant="outline" showHash={false}>{post.data.lang}</Badge>
+          <Separator orientation="vertical" className="h-4" />
+          <Badge variant="outline" showHash={false}
+            >{post.data.pages} page</Badge
+          >
+        </div>
+      </div>
 
-      <PostNavigation prevPost={prevPost} nextPost={nextPost} baseUrl="/blog/"/>
+      <PostNavigation
+        prevPost={prevPost}
+        nextPost={nextPost}
+        baseUrl="/books/"
+      />
     </section>
 
     {headings.length > 0 && <TableOfContents headings={headings} />}
@@ -159,7 +164,7 @@ const authors = await parseAuthors(post.data.authors ?? [])
       <Content />
     </article>
 
-    <PostNavigation prevPost={prevPost} nextPost={nextPost} baseUrl="/blog/"/>
+    <PostNavigation prevPost={prevPost} nextPost={nextPost} baseUrl="/books/" />
   </section>
 
   <Button

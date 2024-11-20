@@ -1,0 +1,45 @@
+---
+import { formatDate, readingTime } from '@/lib/utils'
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import Link from './Link.astro'
+
+type Props = {
+    entry: CollectionEntry<'about'>
+}
+
+const { entry } = Astro.props as {
+    entry: CollectionEntry<'about'>
+}
+
+const formattedDate = formatDate(entry.data.date)
+const readTime = readingTime(entry.body)
+---
+
+<div
+    class="not-prose rounded-xl transition-colors duration-300 ease-in-out hover:bg-secondary/50"
+>
+    <Link href={`/${entry.collection}/${entry.slug}`} class="flex flex-col">
+        {
+            entry.data.image && (
+                <div class="relative h-full w-full">
+                    <Image
+                        src={entry.data.image}
+                        alt={entry.data.title}
+                        class="h-full w-full object-cover"
+                    />
+                    <div class="absolute top-[60%] bottom-[10%] flex transform left-1/2 w-[70%] flex-grow -translate-x-1/2 ">
+                        <div class="w-full h-full flex flex-col justify-center items-center">
+                            <h3 class="mb-1 text-lg font-semibold">
+                                {entry.data.title}
+                            </h3>
+                            <p class="mb-2 text-sm text-muted-foreground">
+                                {entry.data.description}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
+    </Link>
+</div>
